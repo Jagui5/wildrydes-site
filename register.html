@@ -41,9 +41,9 @@
         <section class="form-wrap">
             <h1>Register</h1>
             <form id="registrationForm">
-              <input type="email" id="emailInputRegister" placeholder="Email" pattern=".*" required>
-              <input type="password" id="passwordInputRegister" placeholder="Password" pattern=".*" required>
-              <input type="password" id="password2InputRegister" placeholder="Confirm Password" pattern=".*" required>
+              <input type="email" id="emailInputRegister" placeholder="Email" required>
+              <input type="password" id="passwordInputRegister" placeholder="Password" minlenght="8" required>
+              <input type="password" id="password2InputRegister" placeholder="Confirm Password" minlenght="8" required>
 
               <input type="submit" value="Let's Ryde">
             </form>
@@ -57,3 +57,4 @@
         <script src="js/cognito-auth.js"></script>
     </body>
 </html>
+
