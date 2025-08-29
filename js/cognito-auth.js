@@ -59,7 +59,7 @@ var WildRydes = window.WildRydes || {};
         };
         var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
 
-        userPool.signUp(toUsername(email), password, [attributeEmail], null,
+        userPool.signUp((email), password, [attributeEmail], null,
             function signUpCallback(err, result) {
                 if (!err) {
                     onSuccess(result);
@@ -72,11 +72,15 @@ var WildRydes = window.WildRydes || {};
 
     function signin(email, password, onSuccess, onFailure) {
         var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
-            Username: toUsername(email),
+            Username: email, // Use raw email directly
             Password: password
         });
-
-        var cognitoUser = createCognitoUser(email);
+    
+        var cognitoUser = new AmazonCognitoIdentity.CognitoUser({
+            Username: email, // Use raw email directly
+            Pool: userPool
+        });
+    
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: onSuccess,
             onFailure: onFailure
@@ -95,14 +99,14 @@ var WildRydes = window.WildRydes || {};
 
     function createCognitoUser(email) {
         return new AmazonCognitoIdentity.CognitoUser({
-            Username: toUsername(email),
+            Username: email,
             Pool: userPool
         });
     }
 
-    function toUsername(email) {
-        return email.replace('@', '-at-');
-    }
+    //function toUsername(email) { //This trasnformation breaks Cognito?s email as username validation replacing  @ and at
+    //    return email.replace('@', '-at-');
+    //}
 
     /*
      *  Event Handlers
@@ -171,3 +175,4 @@ var WildRydes = window.WildRydes || {};
         );
     }
 }(jQuery));
+
