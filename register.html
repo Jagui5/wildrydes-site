@@ -55,21 +55,8 @@
         <script src="js/config.js"></script>
         <script src="js/cognito-auth.js"></script>
         
-        <!-- Password Match Validation -->
-    <script>
-      document.getElementById('registrationForm').addEventListener('submit', function(e) {
-        const password = document.getElementById('passwordInputRegister').value;
-        const confirmPassword = document.getElementById('password2InputRegister').value;
-
-        if (password !== confirmPassword) {
-          e.preventDefault();
-          alert('Passwords do not match. Please try again.');
-        }
-      });
-    </script>
-
-        
     </body>
 </html>
+
 
 
