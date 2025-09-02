@@ -1,11 +1,11 @@
-/*global Lingoraise _config*/
+/*global Wildrydes _config*/
 
-var Lingoraise = window.Lingoraise || {};
-Lingoraise.map = Lingoraise.map || {};
+var Wildrydes = window.Wildrydes || {};
+Wildrydes.map = Wildrydes.map || {};
 
 (function rideScopeWrapper($) {
     var authToken;
-    Lingoraise.authToken.then(function setAuthToken(token) {
+    Wildrydes.authToken.then(function setAuthToken(token) {
         if (token) {
             authToken = token;
         } else {
@@ -47,7 +47,7 @@ Lingoraise.map = Lingoraise.map || {};
         displayUpdate(unicorn.Name + ', your ' + unicorn.Color + ' unicorn, is on ' + pronoun + ' way.');
         animateArrival(function animateCallback() {
             displayUpdate(unicorn.Name + ' has arrived. Giddy up!');
-            Lingoraise.map.unsetLocation();
+            Wildrydes.map.unsetLocation();
             $('#request').prop('disabled', 'disabled');
             $('#request').text('Set Pickup');
         });
@@ -56,9 +56,9 @@ Lingoraise.map = Lingoraise.map || {};
     // Register click handler for #request button
     $(function onDocReady() {
         $('#request').click(handleRequestClick);
-        $(Lingoraise.map).on('pickupChange', handlePickupChanged);
+        $(Wildrydes.map).on('pickupChange', handlePickupChanged);
 
-        Lingoraise.authToken.then(function updateAuthMessage(token) {
+        Wildrydes.authToken.then(function updateAuthMessage(token) {
             if (token) {
                 displayUpdate('You are authenticated. Click to see your <a href="#authTokenModal" data-toggle="modal">auth token</a>.');
                 $('.authToken').text(token);
@@ -77,32 +77,33 @@ Lingoraise.map = Lingoraise.map || {};
     }
 
     function handleRequestClick(event) {
-        var pickupLocation = Lingoraise.map.selectedPoint;
+        var pickupLocation = Wildrydes.map.selectedPoint;
         event.preventDefault();
         requestUnicorn(pickupLocation);
     }
 
     function animateArrival(callback) {
-        var dest = Lingoraise.map.selectedPoint;
+        var dest = Wildrydes.map.selectedPoint;
         var origin = {};
 
-        if (dest.latitude > Lingoraise.map.center.latitude) {
-            origin.latitude = Lingoraise.map.extent.minLat;
+        if (dest.latitude > Wildrydes.map.center.latitude) {
+            origin.latitude = Wildrydes.map.extent.minLat;
         } else {
-            origin.latitude = Lingoraise.map.extent.maxLat;
+            origin.latitude = Wildrydes.map.extent.maxLat;
         }
 
-        if (dest.longitude > Lingoraise.map.center.longitude) {
-            origin.longitude = Lingoraise.map.extent.minLng;
+        if (dest.longitude > Wildrydes.map.center.longitude) {
+            origin.longitude = Wildrydes.map.extent.minLng;
         } else {
-            origin.longitude = Lingoraise.map.extent.maxLng;
+            origin.longitude = Wildrydes.map.extent.maxLng;
         }
 
-        Lingoraise.map.animate(origin, dest, callback);
+        Wildrydes.map.animate(origin, dest, callback);
     }
 
     function displayUpdate(text) {
         $('#updates').append($('<li>' + text + '</li>'));
     }
 }(jQuery));
+
 
